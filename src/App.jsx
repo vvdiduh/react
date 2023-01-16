@@ -1,14 +1,8 @@
-import PaintingList from './components/PaintingList/PaintingList';
-import Section from './components/Section/Section';
-import paintings from '../src/paintings.json';
-
+import PageTitle from 'components/PageTitle/PageTitle';
 export default function App() {
   return (
     <div>
-      <Section title={'Русні пизда'}>
-        <PaintingList items={paintings} />
-      </Section>
-      <Section title={'Пееремога'} />
+      <PageTitle text='24th Core Worlds Coalition Conference'/>
     </div>
   );
 }
