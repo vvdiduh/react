@@ -1,6 +1,6 @@
 @import-normalize;
 
-:root {
+/* :root {
   --color-white: #ffffff;
   --color-black: #010101;
   --color-green: #4caf50;
@@ -8,7 +8,7 @@
   --color-blue: #2196f3;
   --color-primary-text: #212121;
   --color-secondary-text: #757575;
-}
+} */
 
 * {
   box-sizing: border-box;
