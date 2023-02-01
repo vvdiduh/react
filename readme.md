@@ -1,172 +1,30 @@
-# react-group-33
+# react-18
 
-- [react-icons](https://react-icons.github.io/react-icons/)
-- [date-fns](https://date-fns.org/)
-- [prop-types](https://www.npmjs.com/package/prop-types)
-
-## Components
-
-### Page title
-
-```html
-<h1 class="title">Text</h1>
-```
-
-```css
-.title {
-  margin-top: 0;
-  text-align: center;
-  text-transform: uppercase;
-}
-```
-
-### EventBoard
-
-```html
-<div class="eventBoard">Event cards</div>
-```
-
-```css
-.eventBoard {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, auto));
-  gap: 24px;
-  padding-left: 16px;
-  padding-right: 16px;
-}
-```
-
-### Event
-
-```html
-<div class="event">
-  <h2 class="title">{name}</h2>
-  <p class="info">
-    <i class="icon"></i>
-    Location
-  </p>
-  <p class="info">
-    <i class="icon"></i>
-    Speaker
-  </p>
-  <p class="info">
-    <i class="icon"></i>
-    Start Date
-  </p>
-  <p class="info">
-    <i class="icon"></i>
-    Duration
-  </p>
-  <span class="chip free|paid|vip">Event type</span>
-</div>
-```
-
-Icons:
-
-- FaMapMarkerAlt
-- FaUserAlt
-- FaCalendarAlt
-- FaClock
-
-```css
-.event {
-  position: relative;
-  border: 2px dashed black;
-  padding: 8px;
-  border-radius: 4px;
-}
-
-.title {
-  margin-top: 0;
-  font-size: 14px;
-  line-height: 24px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-
-.info {
-  display: flex;
-  align-items: center;
-  margin-top: 0;
-  margin-bottom: 8px;
-  color: var(--color-primary-text);
-  font-size: 16px;
-  line-height: 24px;
-  font-weight: 400;
-  letter-spacing: 0.25px;
-}
-
-.icon {
-  display: block;
-  margin-right: 8px;
-  color: var(--color-secondary-text);
-}
-
-.chip {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  padding: 4px 8px;
-  border-radius: 4px;
-  text-transform: uppercase;
-  background-color: #000;
-  color: #fff;
-}
-
-.free {
-  background-color: var(--color-green);
-}
-
-.paid {
-  background-color: var(--color-blue);
-}
-
-.vip {
-  background-color: var(--color-red);
-}
-```
-
-## Utils
-
-```js
-import { format, formatDistanceStrict } from 'date-fns';
-
-const formatEventStart = start => {
-  return format(Date.parse(start), 'dd MMMM yyyy, HH:mm');
-};
-
-const formatEventDuration = (start, end) => {
-  return formatDistanceStrict(Date.parse(start), Date.parse(end));
-};
-```
-
-```
-import Z from 'common/components/Z'
-import X from 'common/components/X'
-import Y from 'common/components/Y'
-
-import {Z, X, Y} from 'common/components'
-
-src
-  modules
-    common
-      components
-        Z
-        X
-        Y
-        index.js
-    courses
-      components
-        A
-        B
-        C
-    groups
-      components
-        D
-        E
-    homeworks
-      components
-        F
-
-```
+- Компоненты-классы: class, extends, constructor(), render()
+- События:
+  - Встроенные пропсы событий
+  - Инлайн колбеки
+  - Методы для колбеков в разметку (публичные свойства класса)
+  - SyntheticEvent Object и асинхронные операции
+- [Внутреннее состояние компонента](http://fecore.net.ua/books/rq7s2k-react/lesson-03/images/class-component.jpg):
+  - [Обновение компонента](http://fecore.net.ua/books/rq7s2k-react/lesson-03/images/reactivity.jpg)
+  - state в конструкторе
+  - state как публичное свойство
+- [Изменение состояния](./state-update.png):
+  - Запрет на изменение вручную по ссылке
+  - Метод setState(update, callback)
+  - Как обновляется состояние - передача слайса
+  - Изменение состояния от предыдущего. Метод setState(updaterFn, callback)
+  - Начальное состояние от props
+- [Подъем состояния при композиции (state hoisting, lifting state up)](http://fecore.net.ua/books/rq7s2k-react/lesson-03/#%D0%BF%D0%BE%D0%B4%D1%8A%D0%B5%D0%BC-%D1%81%D0%BE%D1%81%D1%82%D0%BE%D1%8F%D0%BD%D0%B8%D1%8F-state-hoisting)
+  - Методы для колбеков в пропсы детям (публичные свойства класса)
+- Выпадающее меню:
+  - Тогл элемента
+  - Как правильно скрывать и показывать компоненты в React
+- Оживляем колорпикер:
+  - Храним выбранный цвет
+  - Добавляем стиль активного элемента
+- Коллекция заметок (работа с массивом):
+  - Создание заметки
+  - Удаление заметки
+  - Вычисляемые данные (derived data)
