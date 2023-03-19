@@ -1,12 +1,12 @@
 // import { render } from '@testing-library/react';
 import React, { Component } from 'react';
-import './App.css';
 // import Counter from './components/Counter';
 // import Dropdown from './components/Dropdown/Dropdown';
 // import ColorPicker from './components/ColorPicker';
 import TodoList from './components/TodoList';
+import TodoEditor from './components/TodoEditor/TodoEditor';
+// import Form from './components/form';
 import initialTodos from './todos.json';
-// import './style.css';
 
 // const colorPickerOptions = [
 //   { label: 'red', color: '#F44336' },
@@ -27,6 +27,29 @@ class App extends Component {
     }));
   };
 
+  formSubmitHandler = data => {
+    console.log(data);
+  };
+
+  toggleComleted = todoId => {
+    // this.setState(prevState => ({
+    //   todos: prevState.todos.map(todo => {
+    //     if (todo.id === todoId) {
+    //       return {
+    //         ...todo,
+    //         completed: !todo.completed,
+    //       };
+    //     }
+    //     return todo;
+    //   }),
+    // }));
+    this.setState(({ todos }) => ({
+      todos: todos.map(todo =>
+        todo.id === todoId ? { ...todo, completed: !todo.completed } : todo,
+      ),
+    }));
+  };
+
   render() {
     const { todos } = this.state;
     // const competedTodos = todos.filter(todo => todo.completed);
@@ -36,15 +59,21 @@ class App extends Component {
     );
     return (
       <>
-        <h1>Стан Компонента</h1>
-        {/* <Counter />
-    <Dropdown />
-    <ColorPicker options={colorPickerOptions} /> */}
+        {/* <Form onSubmit={this.formSubmitHandler} /> */}
+        {/* <h1>Стан Компонента</h1> */}
+        {/* <Counter /> */}
+        {/* <Dropdown /> */}
+        {/* <ColorPicker options={colorPickerOptions} /> */}
         <div>
+          <TodoEditor />
           <p>Загальна кількість туду:{todos.length}</p>
           <p>Загальна кількість виконаних туду:{competedTodos}</p>
         </div>
-        <TodoList todos={todos} onDeletTodo={this.deleteTodo} />
+        <TodoList
+          todos={todos}
+          onDeletTodo={this.deleteTodo}
+          onToggleCompleted={this.toggleComleted}
+        />
       </>
     );
   }
