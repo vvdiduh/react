@@ -1,10 +1,12 @@
 // import { render } from '@testing-library/react';
 import React, { Component } from 'react';
+import shortid from 'shortid';
 // import Counter from './components/Counter';
 // import Dropdown from './components/Dropdown/Dropdown';
 // import ColorPicker from './components/ColorPicker';
 import TodoList from './components/TodoList';
 import TodoEditor from './components/TodoEditor/TodoEditor';
+import Filter from './components/Filter';
 // import Form from './components/form';
 import initialTodos from './todos.json';
 
@@ -20,7 +22,17 @@ import initialTodos from './todos.json';
 class App extends Component {
   state = {
     todos: initialTodos,
+    filter: '',
   };
+
+  addTodo = text => {
+    console.log(text);
+    const todo = { id: shortid.generate(), text, completed: false };
+    this.setState(({ todos }) => ({
+      todos: [todo, ...todos],
+    }));
+  };
+
   deleteTodo = todoId => {
     this.setState(prevState => ({
       todos: prevState.todos.filter(todo => todo.id !== todoId),
@@ -50,13 +62,32 @@ class App extends Component {
     }));
   };
 
-  render() {
-    const { todos } = this.state;
-    // const competedTodos = todos.filter(todo => todo.completed);
-    const competedTodos = todos.reduce(
+  chengeFilter = e => {
+    // console.log(e);
+    this.setState({ filter: e.target.value });
+  };
+
+  getVisibleTodos = () => {
+    const { todos, filter } = this.state;
+
+    const mormalizeFilter = filter.toLowerCase();
+    return todos.filter(todo =>
+      todo.text.toLowerCase().includes(mormalizeFilter),
+    );
+  };
+
+  calculatedCompletedTodos = () => {
+    return this.state.todos.reduce(
       (acc, todo) => (todo.completed ? acc + 1 : acc),
       0,
     );
+  };
+
+  render() {
+    const { todos, filter } = this.state;
+    // const competedTodos = todos.filter(todo => todo.completed);
+    const competedTodos = this.calculatedCompletedTodos();
+    const visibleTodos = this.getVisibleTodos();
     return (
       <>
         {/* <Form onSubmit={this.formSubmitHandler} /> */}
@@ -65,12 +96,13 @@ class App extends Component {
         {/* <Dropdown /> */}
         {/* <ColorPicker options={colorPickerOptions} /> */}
         <div>
-          <TodoEditor />
+          <TodoEditor onSubmit={this.addTodo} />
+          <Filter value={filter} onChange={this.chengeFilter} />
           <p>Загальна кількість туду:{todos.length}</p>
           <p>Загальна кількість виконаних туду:{competedTodos}</p>
         </div>
         <TodoList
-          todos={todos}
+          todos={visibleTodos}
           onDeletTodo={this.deleteTodo}
           onToggleCompleted={this.toggleComleted}
         />
