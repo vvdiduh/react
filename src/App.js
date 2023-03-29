@@ -6,8 +6,14 @@ import shortid from 'shortid';
 // import ColorPicker from './components/ColorPicker';
 import TodoList from './components/TodoList';
 import TodoEditor from './components/TodoEditor/TodoEditor';
-import Filter from './components/Filter';
+import Filter from './components/ToDoFilter/Filter';
 import Modal from './components/Modal';
+import IconButton from './components/IconButton';
+import { ReactComponent as AddIcon } from './icons/add.svg';
+// import Tabs from './components/Tabs/Tabs';
+// import tabs from './tabs.json';
+
+// import Clock from './components/Clock';
 // import Form from './components/form';
 // import initialTodos from './todos.json';
 
@@ -37,8 +43,11 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.todos !== this.state.todos) {
-      localStorage.setItem('todos', JSON.stringify(this.state.todos));
+    const nextTodos = this.state.todos;
+    const prevTodos = prevState.todos;
+
+    if (prevTodos !== nextTodos) {
+      localStorage.setItem('todos', JSON.stringify(nextTodos));
     }
   }
 
@@ -48,6 +57,8 @@ class App extends Component {
     this.setState(({ todos }) => ({
       todos: [todo, ...todos],
     }));
+
+    this.toggleModal();
   };
 
   deleteTodo = todoId => {
@@ -115,16 +126,16 @@ class App extends Component {
     const toggleModal = this.toggleModal;
     return (
       <>
-        <button type="button" onClick={toggleModal}>
+        {/* <Tabs items={tabs} /> */}
+        <IconButton onClick={toggleModal} aria-label="add todo">
+          <AddIcon width={40} height={40} fill="white" />
+        </IconButton>
+        {/* <button type="button" c>
           Open modal
-        </button>
+        </button> */}
         {showModal && (
-          <Modal onClose={toggleModal}>
-            <h1>Modal title</h1>
-            <p>lorem50</p>
-            <button type="button" onClick={toggleModal}>
-              Close modal
-            </button>
+          <Modal onClose={this.toggleModal}>
+            <TodoEditor onSubmit={this.addTodo} />
           </Modal>
         )}
         {/* <Form onSubmit={this.formSubmitHandler} /> */}
@@ -133,10 +144,9 @@ class App extends Component {
         {/* <Dropdown /> */}
         {/* <ColorPicker options={colorPickerOptions} /> */}{' '}
         <div>
-          <TodoEditor onSubmit={this.addTodo} />
-          <Filter value={filter} onChange={this.chengeFilter} />
           <p>Загальна кількість туду:{todos.length}</p>
           <p>Загальна кількість виконаних туду:{competedTodos}</p>{' '}
+          <Filter value={filter} onChange={this.chengeFilter} />
         </div>{' '}
         <TodoList
           todos={visibleTodos}
